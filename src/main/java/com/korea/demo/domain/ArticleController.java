@@ -66,8 +66,20 @@ public class ArticleController { // Model + Controller
         }
 
         model.addAttribute("article", article);
-        return "redirect:/detail/%d".formatted(articleID);
+        return "updateForm";
         // return "%d번 게시물이 수정되었습니다.". formatted(inputID); 이렇게 해도 됨.
+    }
+    @PostMapping("/update/{articleID}")
+    public String update(@PathVariable("articleID") int articleID, @RequestParam("title") String title, @RequestParam("body") String body) {
+        Article article = articleRepository.findArticleById(articleID);
+
+        if (article == null) {
+            throw new RuntimeException("없는 게시물입니다.");
+        }
+
+        articleRepository.updateArticle(article, title, body);
+
+        return "redirect:/detail/%d".formatted(articleID);
     }
 
     @RequestMapping("/list")
