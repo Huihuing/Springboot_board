@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class ArticleController { // Model + Controller
 
     CommonUtil commonUtil = new CommonUtil();
-    ArticleView articleView = new ArticleView();
     ArticleRepository articleRepository = new ArticleRepository();
 
     @RequestMapping("/search")
@@ -58,17 +57,16 @@ public class ArticleController { // Model + Controller
        return "redirect:/list";
     }
 
-    @RequestMapping("/update")
-    @ResponseBody
-    public String update(@RequestParam("articleID") int inputId, @RequestParam("newTitle") String newTitle, @RequestParam("newBody") String newBody) {
-        Article article = articleRepository.findArticleById(inputId);
+    @GetMapping("/update/{articleID}")
+    public String updateForm(@PathVariable("articleID") int articleID, Model model) {
+        Article article = articleRepository.findArticleById(articleID);
 
         if (article == null) {
-            return "없는 게시물입니다.";
+            throw new RuntimeException("없는 게시물입니다.");
         }
 
-        articleRepository.updateArticle(article, newTitle, newBody);
-        return inputId + "번 게시물이 수정되었습니다.";
+        model.addAttribute("article", article);
+        return "redirect:/detail/%d".formatted(articleID);
         // return "%d번 게시물이 수정되었습니다.". formatted(inputID); 이렇게 해도 됨.
     }
 
@@ -90,20 +88,5 @@ public class ArticleController { // Model + Controller
     @RequestMapping("/adding")
     public String adding() {
         return "test";
-    }
-
-    @PostMapping("/update/{articleID}")
-    public String updateForm(@PathVariable("articleID") int articleid, Model model)) {
-        Article article = articleRepository.findArticlebyid(articleID);
-
-        if (article == null) {
-            throw new RuntimeException("없는 게시물입니다.");
-        }
-
-        model.addAttribute("article", article);
-        return "redirect:/detail/%d".formatted(articleid);
-    }
-    @PostMapping("/update/{articleID}") {
-    public String update(@)
     }
 }
