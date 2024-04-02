@@ -84,8 +84,9 @@ public class ArticleController { // Model + Controller
 
     @RequestMapping("/list")
     public String list(Model model) {
+
         ArrayList<Article> articleList = articleRepository.findAll();
-        model.addAttribute("alist", articleList);
+        model.addAttribute("articleList", articleList);
         return "list";
 //      articleView.printArticleList(articleList); // 전체 출력 -> 전체 저장소 넘기기
     }
