@@ -91,15 +91,15 @@ public class ArticleController { // Model + Controller
 //      articleView.printArticleList(articleList); // 전체 출력 -> 전체 저장소 넘기기
     }
 
-    @RequestMapping("/add")
+    @PostMapping("/add")
 //    @ResponseBody <- 있을 경우 리턴은 있는 그대로 "출력"함
-    public String add(@RequestParam("title") String title, @RequestParam("body") String body) {
+    public String add(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
         articleRepository.saveArticle(title, body);
         return "redirect:/list"; // 브라우저의 주소가 /list로 바뀜
     }
 
-    @RequestMapping("/adding")
-    public String adding() {
-        return "test";
+    @GetMapping("/add")
+    public String addForm() {
+        return "addForm";
     }
 }
