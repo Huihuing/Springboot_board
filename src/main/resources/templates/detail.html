@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>상세보기</title>
 </head>
 <body>
 <h1>상세보기</h1>
@@ -11,7 +11,7 @@
         <div th:text="${article.body}"></div>
 
 </div>
-<a href="@{|/delete/${article.id}|}">삭제</a>
-<a href="@{|/update/${article.id}|}">수정</a>
+<a th:href="@{|/delete/${article.id}|}">삭제</a>
+<a th:href="@{|/update/${article.id}|}">수정</a>
 </body>
 </html>

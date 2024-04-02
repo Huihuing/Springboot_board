@@ -2,13 +2,10 @@ package com.korea.demo.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.korea.demo.base.CommonUtil;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 @Controller
 // Model - Controller - View
@@ -20,11 +17,9 @@ public class ArticleController { // Model + Controller
 
     @RequestMapping("/search")
     @ResponseBody
-    public ArrayList<Article> search(@RequestParam("find") String keyword) {
+    public ArrayList<Article> search(@RequestParam(value="keyword", defaultValue = "") String keyword) {
         // 검색어를 입력
         ArrayList<Article> searchedList = articleRepository.findArticleByKeyword(keyword);
-
-        articleView.printArticleList(searchedList);
         return searchedList;
     }
 
@@ -32,19 +27,19 @@ public class ArticleController { // Model + Controller
     public String searching() {
         return "test2";
     }
-    @RequestMapping("/detail")
-    public String detail(@RequestParam("articleID") int inputId, Model model) {
-        Article article = articleRepository.findArticleById(inputId);
+
+
+    @RequestMapping("/detail/{articleID}")
+    public String detail(@RequestParam("articleID") int articleID, Model model) {
+
+        Article article = articleRepository.findArticleById(articleID);
 
         if (article == null) {
             return "없는 게시물입니다.";
         }
-        article.increaseHit();
-//        article.increaseHit();
-//        return articleView.printArticleDetail(article);
-//        return articleList;
 
-//        객체를 -> json 문자열로 변환 -> jackson 라이브러리 사용
+        article.increaseHit();
+//      객체를 -> json 문자열로 변환 -> jackson 라이브러리 사용
         model.addAttribute("article", article);
         return "detail";
 
