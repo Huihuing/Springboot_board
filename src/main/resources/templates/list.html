@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 목록</title>
+</head>
+<body>
+<h1>목록</h1>
+<ul>
+    <li th:each="article : ${list}">
+        <a th:href="@{|/detail?articleID=${article.id}|}" th:text="${article.title}"></a>
+    </li>
+</ul>
+</body>
+</html>
