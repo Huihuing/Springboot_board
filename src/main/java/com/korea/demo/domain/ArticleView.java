@@ -17,14 +17,13 @@ public class ArticleView {
         }
     }
 
-    public String printArticleDetail(Article article) {
-        String result = "===================";
-        result += "번호 : " + article.getId();
-        result += "제목 : " + article.getTitle();
-        result += "내용 : " + article.getBody();
-        result += "등록날짜 : " + article.getRegDate();
-        result += "조회수 : " + article.getHit();
-        result += "===================";
-        return result;
+    public void printArticleDetail(Article article) {
+        System.out.println("===================");
+        System.out.println("번호 : " + article.getId());
+        System.out.println("제목 : " + article.getTitle());
+        System.out.println("내용 : " + article.getBody());
+        System.out.println("등록날짜 : " + article.getRegDate());
+        System.out.println("조회수 : " + article.getHit());
+        System.out.println("===================");
     }
 }

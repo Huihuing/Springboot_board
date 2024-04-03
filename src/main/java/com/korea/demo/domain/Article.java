@@ -51,6 +51,8 @@ public class Article {
         this.id = id;
     }
 
+
+
     public String getTitle() {
         return title;
     }

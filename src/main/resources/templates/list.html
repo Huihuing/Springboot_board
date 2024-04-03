@@ -7,9 +7,11 @@
 <body>
 <h1>목록</h1>
 <ul>
-    <li th:each="article : ${list}">
-        <a th:href="@{|/detail?articleID=${article.id}|}" th:text="${article.title}"></a>
+    <li th:each="article : ${articleList}">
+        <a th:href="@{|/detail/${article.id}|}"
+           th:text="${article.title}"></a>
     </li>
 </ul>
+<a href="/add">등록하기</a>
 </body>
 </html>

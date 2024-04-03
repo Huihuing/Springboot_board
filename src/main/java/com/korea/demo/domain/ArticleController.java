@@ -28,10 +28,10 @@ public class ArticleController { // Model + Controller
     }
 
 
-    @RequestMapping("/detail/{articleID}")
-    public String detail(@RequestParam("articleID") int articleID, Model model) {
+    @RequestMapping("/detail/{articleId}")
+    public String detail(@PathVariable("articleId") int articleId, Model model) {
 
-        Article article = articleRepository.findArticleById(articleID);
+        Article article = articleRepository.findArticleById(articleId);
 
         if (article == null) {
             return "없는 게시물입니다.";
@@ -44,10 +44,10 @@ public class ArticleController { // Model + Controller
 
     }
 
-    @RequestMapping("/delete/{articleID}")
-    public String delete(@RequestParam("articleID") int inputId) {
+    @RequestMapping("/delete/{articleId}")
+    public String delete(@PathVariable("articleId") int articleId) {
 
-        Article article = articleRepository.findArticleById(inputId);
+        Article article = articleRepository.findArticleById(articleId);
 
         if (article == null) {
             return "없는 게시물입니다.";
@@ -57,9 +57,10 @@ public class ArticleController { // Model + Controller
        return "redirect:/list";
     }
 
-    @GetMapping("/update/{articleID}")
-    public String updateForm(@PathVariable("articleID") int articleID, Model model) {
-        Article article = articleRepository.findArticleById(articleID);
+    @GetMapping("/update/{articleId}")
+    public String updateForm(@PathVariable("articleId") int articleId,
+                             Model model) {
+        Article article = articleRepository.findArticleById(articleId);
 
         if (article == null) {
             throw new RuntimeException("없는 게시물입니다.");
@@ -69,9 +70,11 @@ public class ArticleController { // Model + Controller
         return "updateForm";
         // return "%d번 게시물이 수정되었습니다.". formatted(inputID); 이렇게 해도 됨.
     }
-    @PostMapping("/update/{articleID}")
-    public String update(@PathVariable("articleID") int articleID, @RequestParam("title") String title, @RequestParam("body") String body) {
-        Article article = articleRepository.findArticleById(articleID);
+    @PostMapping("/update/{articleId}")
+    public String update(@PathVariable("articleId") int articleId,
+                         @RequestParam("title") String title,
+                         @RequestParam("body") String body) {
+        Article article = articleRepository.findArticleById(articleId);
 
         if (article == null) {
             throw new RuntimeException("없는 게시물입니다.");
@@ -79,7 +82,7 @@ public class ArticleController { // Model + Controller
 
         articleRepository.updateArticle(article, title, body);
 
-        return "redirect:/detail/%d".formatted(articleID);
+        return "redirect:/detail/%d".formatted(articleId);
     }
 
     @RequestMapping("/list")
@@ -93,7 +96,9 @@ public class ArticleController { // Model + Controller
 
     @PostMapping("/add")
 //    @ResponseBody <- 있을 경우 리턴은 있는 그대로 "출력"함
-    public String add(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
+    public String add(@RequestParam("title") String title,
+                      @RequestParam("body") String body,
+                      Model model) {
         articleRepository.saveArticle(title, body);
         return "redirect:/list"; // 브라우저의 주소가 /list로 바뀜
     }
